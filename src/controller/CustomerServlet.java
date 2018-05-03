@@ -31,7 +31,7 @@ public class CustomerServlet extends HttpServlet {
                 deleteCustomer(request, response);
                 break;
             case "edit":
-                updateCustomer(request,response);
+                updateCustomer(request, response);
             default:
                 break;
         }
@@ -47,7 +47,7 @@ public class CustomerServlet extends HttpServlet {
                 showCreate(request, response);
                 break;
             case "edit":
-                updateCustomer(request, response);
+                showupdate(request,response);
                 break;
             case "delete":
                 showDelete(request, response);
@@ -141,7 +141,7 @@ public class CustomerServlet extends HttpServlet {
         String address = request.getParameter("address");
         int id = (int) (Math.random() * 100);
 
-        Customer customer = new Customer(id,name,email,address);
+        Customer customer = new Customer(id, name, email, address);
         this.customerService.save(customer);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/create.jsp");
         request.setAttribute("message", "New customer was created");
@@ -165,13 +165,13 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-    public void showupdate(HttpServletRequest request, HttpServletResponse response){
+    public void showupdate(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         Customer customer = this.customerService.findById(id);
-        RequestDispatcher requestDispatcher ;
-        if(customer ==null){
+        RequestDispatcher requestDispatcher;
+        if (customer == null) {
             requestDispatcher = request.getRequestDispatcher("error-404.jsp");
-        }else {
+        } else {
             request.setAttribute("customer", customer);
             requestDispatcher = request.getRequestDispatcher("customer/edit.jsp");
             try {
@@ -184,16 +184,16 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-    public void updateCustomer(HttpServletRequest request, HttpServletResponse response){
+    public void updateCustomer(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String address = request.getParameter("address");
         Customer customer = this.customerService.findById(id);
         RequestDispatcher requestDispatcher;
-        if(customer == null){
+        if (customer == null) {
             requestDispatcher = request.getRequestDispatcher("customer/error-404.jsp");
-        }else{
+        } else {
             customer.setName(name);
             customer.setAdress(address);
             customer.setEmail(email);
